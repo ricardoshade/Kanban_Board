@@ -3,6 +3,11 @@ dotenv.config();
 import { Sequelize } from 'sequelize';
 import { UserFactory } from './user.js';
 import { TicketFactory } from './ticket.js';
+
+import Ticket from './ticket.js';
+import User from './user.js';
+
+
 const sequelize = process.env.DB_URL
     ? new Sequelize(process.env.DB_URL)
     : new Sequelize(process.env.DB_NAME || '', process.env.DB_USER || '', process.env.DB_PASSWORD, {
@@ -35,5 +40,7 @@ const syncDB = async (force = false) => {
     }
 };
 export { sequelize, User, Ticket, connectDB, syncDB };
+
 export * from './ticket.js';
 export * from './user.js';
+export { Ticket, User };
