@@ -10,15 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteTicket = exports.updateTicket = exports.createTicket = exports.getTicketById = exports.getAllTickets = void 0;
-const ticket_js_1 = require("../models/ticket.js");
-const user_js_1 = require("../models/user.js");
+const ticket_1 = require("../models/ticket");
+const user_1 = require("../models/user");
 // GET /tickets
 const getAllTickets = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const tickets = yield ticket_js_1.Ticket.findAll({
+        const tickets = yield ticket_1.Ticket.findAll({
             include: [
                 {
-                    model: user_js_1.User,
+                    model: user_1.User,
                     as: 'assignedUser',
                     attributes: ['username'], // Include only the username attribute
                 },
@@ -35,10 +35,10 @@ exports.getAllTickets = getAllTickets;
 const getTicketById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const ticket = yield ticket_js_1.Ticket.findByPk(id, {
+        const ticket = yield ticket_1.Ticket.findByPk(id, {
             include: [
                 {
-                    model: user_js_1.User,
+                    model: user_1.User,
                     as: 'assignedUser',
                     attributes: ['username'], // Include only the username attribute
                 },
@@ -60,7 +60,7 @@ exports.getTicketById = getTicketById;
 const createTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { name, status, description, assignedUserId } = req.body;
     try {
-        const newTicket = yield ticket_js_1.Ticket.create({ name, status, description, assignedUserId });
+        const newTicket = yield ticket_1.Ticket.create({ name, status, description, assignedUserId });
         res.status(201).json(newTicket);
     }
     catch (error) {
@@ -73,7 +73,7 @@ const updateTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const { id } = req.params;
     const { name, status, description, assignedUserId } = req.body;
     try {
-        const ticket = yield ticket_js_1.Ticket.findByPk(id);
+        const ticket = yield ticket_1.Ticket.findByPk(id);
         if (ticket) {
             ticket.name = name;
             ticket.status = status;
@@ -95,7 +95,7 @@ exports.updateTicket = updateTicket;
 const deleteTicket = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const ticket = yield ticket_js_1.Ticket.findByPk(id);
+        const ticket = yield ticket_1.Ticket.findByPk(id);
         if (ticket) {
             yield ticket.destroy();
             res.json({ message: 'Ticket deleted' });

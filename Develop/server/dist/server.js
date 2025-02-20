@@ -16,14 +16,14 @@ const forceDatabaseRefresh = false;
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const express_1 = __importDefault(require("express"));
-const index_js_1 = __importDefault(require("./routes/index.js"));
+const routes_1 = __importDefault(require("./routes"));
 const models_1 = require("./models");
 const app = (0, express_1.default)();
 const PORT = process.env.PORT || 3001;
 // Serves static files in the entire client's dist folder
 app.use(express_1.default.static('../client/dist'));
 app.use(express_1.default.json());
-app.use(index_js_1.default);
+app.use('/api', routes_1.default);
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, models_1.connectDB)();
     yield (0, models_1.syncDB)(forceDatabaseRefresh);

@@ -10,11 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.updateUser = exports.createUser = exports.getUserById = exports.getAllUsers = void 0;
-const user_js_1 = require("../models/user.js");
+const user_1 = require("../models/user");
 // GET /Users
 const getAllUsers = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield user_js_1.User.findAll({
+        const users = yield user_1.User.findAll({
             attributes: { exclude: ['password'] }
         });
         res.json(users);
@@ -28,7 +28,7 @@ exports.getAllUsers = getAllUsers;
 const getUserById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const user = yield user_js_1.User.findByPk(id, {
+        const user = yield user_1.User.findByPk(id, {
             attributes: { exclude: ['password'] }
         });
         if (user) {
@@ -47,7 +47,7 @@ exports.getUserById = getUserById;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     try {
-        const newUser = yield user_js_1.User.create({ username, password });
+        const newUser = yield user_1.User.create({ username, password });
         res.status(201).json(newUser);
     }
     catch (error) {
@@ -60,7 +60,7 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     const { id } = req.params;
     const { username, password } = req.body;
     try {
-        const user = yield user_js_1.User.findByPk(id);
+        const user = yield user_1.User.findByPk(id);
         if (user) {
             user.username = username;
             user.password = password;
@@ -80,7 +80,7 @@ exports.updateUser = updateUser;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     try {
-        const user = yield user_js_1.User.findByPk(id);
+        const user = yield user_1.User.findByPk(id);
         if (user) {
             yield user.destroy();
             res.json({ message: 'User deleted' });
