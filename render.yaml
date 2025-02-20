@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: kanban-board
+    env: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: DATABASE_URL
+        value: postgres://ricardo:1234@localhost:5432/kanban_board
+      - key: JWT_SECRET_KEY
+        value: secret_key
