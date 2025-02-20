@@ -1,29 +1,31 @@
 import { Router, Request, Response } from 'express';
-import { User } from '../models/user.js';
+import { User } from '../models/user';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
-export const login = async (req: Request, res: Response) => {
-  // TODO: If the user exists and the password is correct, return a JWT token
+const login = async (req: Request, res: Response): Promise<Response | void> => {
   const { username, password } = req.body;
+  const user = await User.findOne({ where: { username } });
 
-  const user = await User.findOne({ username });
   if (!user) {
-    return res.status(400).json({ message: 'Invalid username or password.' });
+    return res.status(401).send('Invalid username or password');
   }
 
-  const validPassword = await bcrypt.compare(password, user.password);
-  if (!validPassword) {
-    return res.status(400).json({ message: 'Invalid username or password.' });
+  const isPasswordValid = await bcrypt.compare(password, user.password);
+
+  if (!isPasswordValid) {
+    return res.status(401).send('Invalid username or password');
   }
 
-  const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET_KEY!, { expiresIn: '1h' });
-  res.json({ token });
+  if (!process.env.JWT_SECRET_KEY) {
+    return res.status(500).send('JWT secret key is not defined');
+  }
+
+  const token = jwt.sign({ username: user.username }, process.env.JWT_SECRET_KEY, { expiresIn: '1h' });
+
+  return res.json({ token });
 };
 
 const router = Router();
-
-// POST /login - Login a user
 router.post('/login', login);
-
 export default router;

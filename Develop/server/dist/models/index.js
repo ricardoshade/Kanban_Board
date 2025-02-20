@@ -16,4 +16,24 @@ const User = UserFactory(sequelize);
 const Ticket = TicketFactory(sequelize);
 User.hasMany(Ticket, { foreignKey: 'assignedUserId' });
 Ticket.belongsTo(User, { foreignKey: 'assignedUserId', as: 'assignedUser' });
-export { sequelize, User, Ticket };
+const connectDB = async () => {
+    try {
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+    }
+    catch (error) {
+        console.error('Unable to connect to the database:', error);
+    }
+};
+const syncDB = async (force = false) => {
+    try {
+        await sequelize.sync({ force });
+        console.log('Database synchronized successfully.');
+    }
+    catch (error) {
+        console.error('Error synchronizing the database:', error);
+    }
+};
+export { sequelize, User, Ticket, connectDB, syncDB };
+export * from './ticket.js';
+export * from './user.js';
