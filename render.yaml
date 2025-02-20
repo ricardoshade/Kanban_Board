@@ -11,5 +11,5 @@ services:
         value: postgres://ricardo:1234@localhost:5432/kanban_board
       - key: JWT_SECRET_KEY
         value: secret_key
-    env:
-      PORT: 3000
+      - key: PORT
+        value: 3000
