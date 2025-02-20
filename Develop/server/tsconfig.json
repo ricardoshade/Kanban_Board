@@ -1,15 +1,29 @@
 {
-    "extends": "../tsconfig.json",
     "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "module": "commonjs",
+    "target": "es6",
+    "strict": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "rootDir": "src",
-    "outDir": "dist",
-    "resolveJsonModule": true
+    "types": ["node", "jsonwebtoken", "bcrypt"]
   },
-  "include": ["src"],
-  "typeRoots": ["./node_modules/@types", "./src/types"]
-}
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules"]
+  }
+
+
+//     "extends": "../tsconfig.json",
+//     "compilerOptions": {
+//     "target": "ES2020",
+//     "module": "ESNext",
+//     "moduleResolution": "node",
+//     "esModuleInterop": true,
+//     "allowSyntheticDefaultImports": true,
+//     "rootDir": "src",
+//     "outDir": "dist",
+//     "resolveJsonModule": true
+//   },
+//   "include": ["src"],
+//   "typeRoots": ["./node_modules/@types", "./src/types"]
+// }
