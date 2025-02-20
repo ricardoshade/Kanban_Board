@@ -5,7 +5,12 @@ interface DecodedToken extends JwtPayload {
   username: string;
 }
 
-export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
+// Extend the Request interface to include the user property
+interface CustomRequest extends Request {
+  user?: DecodedToken;
+}
+
+export const authenticateToken = (req: CustomRequest, res: Response, next: NextFunction) => {
   // TODO: verify the token exists and add the user data to the request object
   const token = req.header('Authorization')?.split(' ')[1];
 

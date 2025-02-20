@@ -2,8 +2,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { Sequelize } from 'sequelize';
-import { UserFactory } from './user.js';
-import { TicketFactory } from './ticket.js';
+import { UserFactory } from './user';
+import { TicketFactory } from './ticket';
 
 
 
@@ -42,5 +42,5 @@ const syncDB = async (force: boolean = false) => {
 };
 
 export { sequelize, User, Ticket, connectDB, syncDB };
-export * from './ticket.js';
-export * from './user.js';
+export * from './ticket';
+export * from './user';
