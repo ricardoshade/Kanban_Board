@@ -4,8 +4,6 @@ dotenv.config();
 import express from 'express';
 import routes from './routes/index.js';
 import { connectDB, syncDB } from './models';
-import { Ticket, User } from './models/index.js';
-
 const app = express();
 const PORT = process.env.PORT || 3001;
 // Serves static files in the entire client's dist folder
